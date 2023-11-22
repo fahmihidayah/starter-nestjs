@@ -1,0 +1,21 @@
+###################
+# BUILD FOR LOCAL DEVELOPMENT
+###################
+FROM node:21-alpine 
+
+# Create app directory
+WORKDIR /usr/src/app
+
+COPY --chown=node:node package*.json ./
+
+COPY --chown=node:node . .
+
+RUN npm install && npm install -g dotenv-cli && npm install -g prisma
+
+RUN npm install 
+
+RUN chmod +x entrypoint-dev.sh
+
+ENV NODE_ENV development
+
+CMD ["./entrypoint-dev.sh"]
